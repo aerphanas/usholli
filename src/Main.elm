@@ -1,9 +1,11 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, text, table, tr, th, div)
+import Html exposing (Html, text, table, tr, th, div, br, a)
 import Http
 import Json.Decode exposing (Decoder, map8, at, string)
+import Html.Attributes exposing (style)
+import Html.Attributes exposing (href)
 
 -- MAIN
 
@@ -96,8 +98,19 @@ view model =
 
         Succes jadwal ->
           div [] 
-            [ div [] [ text "data didapatkan dari kementrian agama pada Selasa, 29 November 2022" ]
-            , table [] 
+            [ div [ style "text-align" "center" ]  
+              [ text "data didapatkan dari kementrian agama dengan API "
+              , br [] []
+              , a [ href "https://api.myquran.com/v1/sholat/jadwal/1015/2022/11/29" ] [ text "https://api.myquran.com/v1/sholat/jadwal/1015/2022/11/29" ]
+              , br [] []
+              , text "Selasa, 29 November 2022"
+              , br [] []
+              , text "untuk DKI Jakarta"
+              ]
+              , table  
+                [ style "margin-left" "auto"
+                , style "margin-right" "auto"
+                ] 
                 [ tr [] [ th [] [ text "Sholat" ]
                         , th [] [ text "Waktu" ]
                         ]
