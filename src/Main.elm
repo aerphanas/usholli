@@ -99,7 +99,7 @@ view model =
         Succes jadwal ->
           div [] 
             [ div [ style "text-align" "center" ]  
-              [ text "data didapatkan dari kementrian agama dengan API "
+              [ text "data didapatkan dari api.myquran.com"
               , br [] []
               , a [ href "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/29" ] [ text "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/29" ]
               , br [] []
