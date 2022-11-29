@@ -101,7 +101,7 @@ view model =
             [ div [ style "text-align" "center" ]  
               [ text "data didapatkan dari kementrian agama dengan API "
               , br [] []
-              , a [ href "https://api.myquran.com/v1/sholat/jadwal/1015/2022/11/29" ] [ text "https://api.myquran.com/v1/sholat/jadwal/1015/2022/11/29" ]
+              , a [ href "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/29" ] [ text "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/29" ]
               , br [] []
               , text "Selasa, 29 November 2022"
               , br [] []
