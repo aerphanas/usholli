@@ -7,8 +7,6 @@ Work In Progress
 
 ## todo
 
----
-
 - [x] communicate with API  
 - [ ] automatic date
 - [ ] minimalist disign
