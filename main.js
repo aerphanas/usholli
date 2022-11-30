@@ -6271,7 +6271,7 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$text('https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30')
 									])),
 								A2($elm$html$Html$br, _List_Nil, _List_Nil),
-								$elm$html$Html$text('Selasa, 29 November 2022'),
+								$elm$html$Html$text('Selasa, 23 November 2022'),
 								A2($elm$html$Html$br, _List_Nil, _List_Nil)
 							])),
 						A2(
