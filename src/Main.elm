@@ -1,11 +1,10 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, text, table, tr, th, div, br, a)
+import Html exposing (Html, text, table, tr, th, div, br, a, td)
 import Http
 import Json.Decode exposing (Decoder, map8, at, string)
-import Html.Attributes exposing (style)
-import Html.Attributes exposing (href)
+import Html.Attributes exposing (style, attribute, href)
 
 -- MAIN
 
@@ -40,7 +39,7 @@ init : () -> (Model, Cmd Msg)
 init _ =
   ( Loading
   , Http.get
-      { url = "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/29"
+      { url = "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30"
       , expect = Http.expectJson Dapat jadwalDecoder
       }
   )
@@ -98,45 +97,42 @@ view model =
 
         Succes jadwal ->
           div [] 
-            [ div [ style "text-align" "center" ]  
+            [ div []  
               [ text "data didapatkan dari api.myquran.com"
               , br [] []
-              , a [ href "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/29" ] [ text "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/29" ]
+              , a [ href "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30" ] [ text "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30" ]
               , br [] []
               , text "Selasa, 29 November 2022"
               , br [] []
-              , text "untuk DKI Jakarta"
               ]
-              , table  
-                [ style "margin-left" "auto"
-                , style "margin-right" "auto"
-                ] 
-                [ tr [] [ th [] [ text "Sholat" ]
+              , table [] 
+                [ tr [] [ td  [  attribute "colspan" "2" ] [ text "untuk DKI Jakarta"]]
+                , tr [] [ th [] [ text "Sholat" ]
                         , th [] [ text "Waktu" ]
                         ]
-                , tr [] [ th [] [ text "Imsak" ]
-                        , th [] [ text jadwal.imsak ]
+                , tr [] [ td [] [ text "Imsak" ]
+                        , td [] [ text jadwal.imsak ]
                         ]
-                , tr [] [ th [] [ text "Subuh" ]
-                        , th [] [ text jadwal.subuh ]
+                , tr [] [ td [] [ text "Subuh" ]
+                        , td [] [ text jadwal.subuh ]
                         ]
-                , tr [] [ th [] [ text "Terbit" ]
-                        , th [] [ text jadwal.terbit ]
+                , tr [] [ td [] [ text "Terbit" ]
+                        , td [] [ text jadwal.terbit ]
                         ]
-                , tr [] [ th [] [ text "Dhuha" ]
-                        , th [] [ text jadwal.dhuha ]
+                , tr [] [ td [] [ text "Dhuha" ]
+                        , td [] [ text jadwal.dhuha ]
                         ]
-                , tr [] [ th [] [ text "Dzuur" ]
-                        , th [] [ text jadwal.dzuhur ]
+                , tr [] [ td [] [ text "Dzuur" ]
+                        , td [] [ text jadwal.dzuhur ]
                         ]
-                , tr [] [ th [] [ text "Ashar" ]
-                        , th [] [ text jadwal.ashar ]
+                , tr [] [ td [] [ text "Ashar" ]
+                        , td [] [ text jadwal.ashar ]
                         ]
-                , tr [] [ th [] [ text "maghrib" ]
-                        , th [] [ text jadwal.maghrib ]
+                , tr [] [ td [] [ text "maghrib" ]
+                        , td [] [ text jadwal.maghrib ]
                         ]
-                , tr [] [ th [] [ text "isya" ]
-                        , th [] [ text jadwal.isya ]
+                , tr [] [ td [] [ text "isya" ]
+                        , td [] [ text jadwal.isya ]
                         ]
                 ]
             ]
