@@ -102,7 +102,7 @@ view model =
               , br [] []
               , a [ href "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30" ] [ text "https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30" ]
               , br [] []
-              , text "Selasa, 23 November 2022"
+              , text "Selasa, 30 November 2022"
               , br [] []
               ]
               , table [] 
