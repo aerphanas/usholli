@@ -6566,7 +6566,7 @@ var $author$project$Main$view = function (model) {
 				A2($elm$html$Html$br, _List_Nil, _List_Nil),
 				$elm$html$Html$text('WARNING : semua data yang ada di halaman ini belum benar'),
 				A2($elm$html$Html$br, _List_Nil, _List_Nil),
-				$elm$html$Html$text('WARNING : Data untuk 2022/12/03 atau tahun 2022 bulan 11 tanggal 03'),
+				$elm$html$Html$text('WARNING : Data untuk 2022/12/03 atau tahun 2022 bulan 12 tanggal 03'),
 				$author$project$Main$keadaan(model)
 			]));
 };

@@ -109,7 +109,7 @@ view model =
       , br [] []
       , text "WARNING : semua data yang ada di halaman ini belum benar"
       , br [] []
-      , text "WARNING : Data untuk 2022/12/03 atau tahun 2022 bulan 11 tanggal 03"
+      , text "WARNING : Data untuk 2022/12/03 atau tahun 2022 bulan 12 tanggal 03"
       , keadaan model
       ]
 
