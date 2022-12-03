@@ -2,31 +2,21 @@ module Main exposing (..)
 
 import Browser
 import Http
-import List exposing (..)
-import Date
 import Json.Decode exposing ( Decoder
                             , map8
                             , map2
                             , at
                             , field
                             , string
-                            , list
+                            , index
                             )
 import Html exposing  ( Html
                       , text
                       , div
                       , button
                       , br
-                      , select
-                      , option
-                      , table
-                      , tr
-                      , td
-                      , th
                       )
-import Html.Events exposing ( onInput)
-import String exposing (isEmpty)
-import Html.Attributes exposing (value, attribute)
+import Html.Events exposing ( onClick )
 
 -- MAIN
 
@@ -43,7 +33,7 @@ main =
 type Model
   = Gagal String
   | Memuat
-  | BerhasilKota (List DaftarKota)
+  | BerhasilKota DaftarKota 
   | BerhasilJadwal Jadwal
 
 type alias DaftarKota =
@@ -72,9 +62,10 @@ init _ =
 
 type Msg
   = Terlepas
-  | DapatKota ( Result Http.Error (List DaftarKota) )
+  | MuatJadwal
+  | MuatKota
+  | DapatKota ( Result Http.Error DaftarKota )
   | DapatJadwal ( Result Http.Error Jadwal )
-  | Terpilih String
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg _ =
@@ -83,6 +74,7 @@ update msg _ =
           case data of
             Ok hasil ->
               (BerhasilKota hasil, Cmd.none)
+
             Err _ ->
               (Gagal "Gagal saat memperoses data kota", Cmd.none)
 
@@ -93,8 +85,11 @@ update msg _ =
             Err _ ->
               (Gagal "Gagal saat memproses data jadwal", Cmd.none)
 
-        Terpilih data ->
-          (Memuat , dapatListJadwal data)
+        MuatJadwal ->
+          (Memuat, dapatListJadwal)
+
+        MuatKota ->
+          (Memuat, dapatListKota)
 
         Terlepas ->
           (Gagal "Gagal saat mengambil data", Cmd.none)
@@ -104,62 +99,28 @@ update msg _ =
 view : Model -> Html Msg
 view model =
     div []
-      [ text "WARNING : semua data yang ada di halaman ini belum benar"
-      , br [] []
-      , text "dan web ini masih dalam tahap pengembangan"
-      , keadaan model
+      [ keadaan model
       ]
 
 keadaan : Model -> Html Msg
 keadaan model = div []
-    [ br [] []
+    [ button [ onClick MuatJadwal ] [ text "memuat jadwal" ]
+    , br [] []
+    , button [ onClick MuatKota ] [text "memuat daftar kota"]
+    , br [] []
     , case model of
         Gagal x ->
           text x
         Memuat ->
           text "Memuat data mohon tunggu"
-        BerhasilKota data ->
-          membuatPilihan data
-        BerhasilJadwal data ->
-          membuatJadwal data
+        BerhasilKota _ ->
+          text "berhasil memuat kota "
+        BerhasilJadwal _ ->
+          text "berhasil memuat jadwal"
     ]
 
-membuatPilihan : (List DaftarKota) -> Html Msg
-membuatPilihan data =
-    select [ onInput Terpilih ]
-        (List.map (\l -> option [value l.id ] [ text l.lokasi ]) data)
 
-membuatJadwal : Jadwal -> Html Msg
-membuatJadwal jadwal =
-    table [] 
-      [ tr [] [ th [] [ text "Sholat" ]
-              , th [] [ text "Waktu" ]
-              ]
-      , tr [] [ td [] [ text "Imsak" ]
-              , td [] [ text jadwal.imsak ]
-              ]
-      , tr [] [ td [] [ text "Subuh" ]
-              , td [] [ text jadwal.subuh ]
-              ]
-      , tr [] [ td [] [ text "Terbit" ]
-              , td [] [ text jadwal.terbit ]
-              ]
-      , tr [] [ td [] [ text "Dhuha" ]
-              , td [] [ text jadwal.dhuha ]
-              ]
-      , tr [] [ td [] [ text "Dzuur" ]
-              , td [] [ text jadwal.dzuhur ]
-              ]
-      , tr [] [ td [] [ text "Ashar" ]
-              , td [] [ text jadwal.ashar ]
-              ]
-      , tr [] [ td [] [ text "maghrib" ]
-              , td [] [ text jadwal.maghrib ]
-              ]
-      , tr [] [ td [] [ text "isya" ]
-              , td [] [ text jadwal.isya ]
-              ]
-      ]
+
 -- HTTP
 
 dapatListKota : Cmd Msg
@@ -169,22 +130,18 @@ dapatListKota =
       , expect = Http.expectJson DapatKota listKotaDecoder
       }
       
-dapatListJadwal : String -> Cmd Msg
-dapatListJadwal idkota =
-        Http.get
-          { url = "https://api.myquran.com/v1/sholat/jadwal/"
-                  ++ idkota
-                  ++ "/2022/06/23"
-          , expect = Http.expectJson DapatJadwal listJadwalDecoder
-          }
+dapatListJadwal : Cmd Msg
+dapatListJadwal =
+  Http.get
+    { url = "https://api.myquran.com/v1/sholat/jadwal/1609/2021/06/23"
+    , expect = Http.expectJson DapatJadwal listJadwalDecoder
+    }
 
-listKotaDecoder : Decoder (List DaftarKota)
+listKotaDecoder : Decoder DaftarKota
 listKotaDecoder =
-    list
-        (Json.Decode.map2 (\id lokasi -> { id = id, lokasi = lokasi })
-            (field "id" string)
-            (field "lokasi" string)
-        )
+  map2 DaftarKota
+    (index 194 (field "id" string))
+    (index 194 (field "lokasi" string))
 
 listJadwalDecoder : Decoder Jadwal
 listJadwalDecoder = 

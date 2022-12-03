@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.I.z === region.Q.z)
+	if (region.T.E === region.ad.E)
 	{
-		return 'on line ' + region.I.z;
+		return 'on line ' + region.T.E;
 	}
-	return 'on lines ' + region.I.z + ' through ' + region.Q.z;
+	return 'on lines ' + region.T.E + ' through ' + region.ad.E;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aI,
-		impl.aW,
-		impl.aT,
+		impl.ba,
+		impl.bp,
+		impl.bm,
 		function() { return function() {} }
 	);
 });
@@ -2719,9 +2719,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		o: func(record.o),
-		J: record.J,
-		G: record.G
+		s: func(record.s),
+		U: record.U,
+		R: record.R
 	}
 });
 
@@ -2989,11 +2989,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.J;
+		var message = !tag ? value : tag < 3 ? value.a : value.s;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.U;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.G) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.R) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3943,11 +3943,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aI,
-		impl.aW,
-		impl.aT,
+		impl.ba,
+		impl.bp,
+		impl.bm,
 		function(sendToApp, initialModel) {
-			var view = impl.aY;
+			var view = impl.bq;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3979,12 +3979,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aI,
-		impl.aW,
-		impl.aT,
+		impl.ba,
+		impl.bp,
+		impl.bm,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.H && impl.H(sendToApp)
-			var view = impl.aY;
+			var divertHrefToApp = impl.S && impl.S(sendToApp)
+			var view = impl.bq;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3992,12 +3992,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aA);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.a2);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aV) && (_VirtualDom_doc.title = title = doc.aV);
+				(title !== doc.bo) && (_VirtualDom_doc.title = title = doc.bo);
 			});
 		}
 	);
@@ -4053,12 +4053,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aL;
-	var onUrlRequest = impl.aM;
+	var onUrlChange = impl.be;
+	var onUrlRequest = impl.bf;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		H: function(sendToApp)
+		S: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4074,9 +4074,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ag === next.ag
-							&& curr.V === next.V
-							&& curr.ad.a === next.ad.a
+							&& curr.aC === next.aC
+							&& curr.am === next.am
+							&& curr.ay.a === next.ay.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4084,13 +4084,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aI: function(flags)
+		ba: function(flags)
 		{
-			return A3(impl.aI, flags, _Browser_getUrl(), key);
+			return A3(impl.ba, flags, _Browser_getUrl(), key);
 		},
-		aY: impl.aY,
-		aW: impl.aW,
-		aT: impl.aT
+		bq: impl.bq,
+		bp: impl.bp,
+		bm: impl.bm
 	});
 }
 
@@ -4156,17 +4156,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aG: 'hidden', aB: 'visibilitychange' }
+		? { a8: 'hidden', a3: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aG: 'mozHidden', aB: 'mozvisibilitychange' }
+		? { a8: 'mozHidden', a3: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aG: 'msHidden', aB: 'msvisibilitychange' }
+		? { a8: 'msHidden', a3: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aG: 'webkitHidden', aB: 'webkitvisibilitychange' }
-		: { aG: 'hidden', aB: 'visibilitychange' };
+		? { a8: 'webkitHidden', a3: 'webkitvisibilitychange' }
+		: { a8: 'hidden', a3: 'visibilitychange' };
 }
 
 
@@ -4247,12 +4247,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		am: _Browser_getScene(),
-		at: {
-			av: _Browser_window.pageXOffset,
-			aw: _Browser_window.pageYOffset,
-			au: _Browser_doc.documentElement.clientWidth,
-			U: _Browser_doc.documentElement.clientHeight
+		aK: _Browser_getScene(),
+		aV: {
+			aZ: _Browser_window.pageXOffset,
+			a_: _Browser_window.pageYOffset,
+			aY: _Browser_doc.documentElement.clientWidth,
+			ak: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4262,8 +4262,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		au: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		U: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		aY: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		ak: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4286,15 +4286,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			am: {
-				au: node.scrollWidth,
-				U: node.scrollHeight
+			aK: {
+				aY: node.scrollWidth,
+				ak: node.scrollHeight
 			},
-			at: {
-				av: node.scrollLeft,
-				aw: node.scrollTop,
-				au: node.clientWidth,
-				U: node.clientHeight
+			aV: {
+				aZ: node.scrollLeft,
+				a_: node.scrollTop,
+				aY: node.clientWidth,
+				ak: node.clientHeight
 			}
 		};
 	});
@@ -4324,18 +4324,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			am: _Browser_getScene(),
-			at: {
-				av: x,
-				aw: y,
-				au: _Browser_doc.documentElement.clientWidth,
-				U: _Browser_doc.documentElement.clientHeight
+			aK: _Browser_getScene(),
+			aV: {
+				aZ: x,
+				a_: y,
+				aY: _Browser_doc.documentElement.clientWidth,
+				ak: _Browser_doc.documentElement.clientHeight
 			},
-			aD: {
-				av: x + rect.left,
-				aw: y + rect.top,
-				au: rect.width,
-				U: rect.height
+			a6: {
+				aZ: x + rect.left,
+				a_: y + rect.top,
+				aY: rect.width,
+				ak: rect.height
 			}
 		};
 	});
@@ -4380,25 +4380,25 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.aE.a(response)));
+			callback(toTask(request.af.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.aE.b, xhr)); });
-		$elm$core$Maybe$isJust(request.as) && _Http_track(router, xhr, request.as.a);
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.af.b, xhr)); });
+		$elm$core$Maybe$isJust(request.aS) && _Http_track(router, xhr, request.aS.a);
 
 		try {
-			xhr.open(request.aJ, request.aX, true);
+			xhr.open(request.bc, request.aU, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.aX));
+			return done($elm$http$Http$BadUrl_(request.aU));
 		}
 
 		_Http_configureRequest(xhr, request);
 
-		request.aA.a && xhr.setRequestHeader('Content-Type', request.aA.a);
-		xhr.send(request.aA.b);
+		request.a2.a && xhr.setRequestHeader('Content-Type', request.a2.a);
+		xhr.send(request.a2.b);
 
 		return function() { xhr.c = true; xhr.abort(); };
 	});
@@ -4409,13 +4409,13 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.T; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.aj; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
-	xhr.timeout = request.aU.a || 0;
-	xhr.responseType = request.aE.d;
-	xhr.withCredentials = request.ay;
+	xhr.timeout = request.bn.a || 0;
+	xhr.responseType = request.af.d;
+	xhr.withCredentials = request.a0;
 }
 
 
@@ -4436,10 +4436,10 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		aX: xhr.responseURL,
-		aR: xhr.status,
-		aS: xhr.statusText,
-		T: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		aU: xhr.responseURL,
+		bk: xhr.status,
+		bl: xhr.statusText,
+		aj: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4534,15 +4534,15 @@ function _Http_track(router, xhr, tracker)
 	xhr.upload.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
-			aQ: event.loaded,
-			an: event.total
+			bj: event.loaded,
+			aM: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
-			aO: event.loaded,
-			an: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			bh: event.loaded,
+			aM: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }var $elm$core$Basics$EQ = 1;
@@ -4951,25 +4951,25 @@ var $elm$core$Array$treeFromBuilder = F2(
 	});
 var $elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.a) {
+		if (!builder.e) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.c),
+				$elm$core$Elm$JsArray$length(builder.g),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.c);
+				builder.g);
 		} else {
-			var treeLen = builder.a * $elm$core$Array$branchFactor;
+			var treeLen = builder.e * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
 				A2($elm$core$Basics$logBase, $elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.d) : builder.d;
-			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.a);
+			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.h) : builder.h;
+			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.e);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.c) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.g) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.c);
+				builder.g);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4982,7 +4982,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{d: nodeList, a: (len / $elm$core$Array$branchFactor) | 0, c: tail});
+					{h: nodeList, e: (len / $elm$core$Array$branchFactor) | 0, g: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -5049,7 +5049,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {S: fragment, V: host, ab: path, ad: port_, ag: protocol, ah: query};
+		return {ai: fragment, am: host, aw: path, ay: port_, aC: protocol, aD: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5328,10 +5328,10 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Main$Dapat = function (a) {
+var $author$project$Main$Memuat = {$: 1};
+var $author$project$Main$DapatKota = function (a) {
 	return {$: 1, a: a};
 };
-var $author$project$Main$Loading = {$: 1};
 var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
@@ -5924,7 +5924,7 @@ var $elm$http$Http$resolve = F2(
 			case 3:
 				var metadata = response.a;
 				return $elm$core$Result$Err(
-					$elm$http$Http$BadStatus(metadata.aR));
+					$elm$http$Http$BadStatus(metadata.bk));
 			default:
 				var body = response.b;
 				return A2(
@@ -5952,7 +5952,7 @@ var $elm$http$Http$Request = function (a) {
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {aj: reqs, ao: subs};
+		return {aF: reqs, aO: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -5996,7 +5996,7 @@ var $elm$http$Http$updateReqs = F3(
 					return A2(
 						$elm$core$Task$andThen,
 						function (pid) {
-							var _v4 = req.as;
+							var _v4 = req.aS;
 							if (_v4.$ === 1) {
 								return A3($elm$http$Http$updateReqs, router, otherCmds, reqs);
 							} else {
@@ -6026,7 +6026,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.aj));
+			A3($elm$http$Http$updateReqs, router, cmds, state.aF));
 	});
 var $elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
@@ -6069,7 +6069,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.ao)));
+					state.aO)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6083,14 +6083,14 @@ var $elm$http$Http$cmdMap = F2(
 			var r = cmd.a;
 			return $elm$http$Http$Request(
 				{
-					ay: r.ay,
-					aA: r.aA,
-					aE: A2(_Http_mapExpect, func, r.aE),
-					T: r.T,
-					aJ: r.aJ,
-					aU: r.aU,
-					as: r.as,
-					aX: r.aX
+					a0: r.a0,
+					a2: r.a2,
+					af: A2(_Http_mapExpect, func, r.af),
+					aj: r.aj,
+					bc: r.bc,
+					bn: r.bn,
+					aS: r.aS,
+					aU: r.aU
 				});
 		}
 	});
@@ -6113,24 +6113,56 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{ay: false, aA: r.aA, aE: r.aE, T: r.T, aJ: r.aJ, aU: r.aU, as: r.as, aX: r.aX}));
+			{a0: false, a2: r.a2, af: r.af, aj: r.aj, bc: r.bc, bn: r.bn, aS: r.aS, aU: r.aU}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{aA: $elm$http$Http$emptyBody, aE: r.aE, T: _List_Nil, aJ: 'GET', aU: $elm$core$Maybe$Nothing, as: $elm$core$Maybe$Nothing, aX: r.aX});
+		{a2: $elm$http$Http$emptyBody, af: r.af, aj: _List_Nil, bc: 'GET', bn: $elm$core$Maybe$Nothing, aS: $elm$core$Maybe$Nothing, aU: r.aU});
+};
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$list = _Json_decodeList;
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Main$listKotaDecoder = $elm$json$Json$Decode$list(
+	A3(
+		$elm$json$Json$Decode$map2,
+		F2(
+			function (id, lokasi) {
+				return {L: id, M: lokasi};
+			}),
+		A2($elm$json$Json$Decode$field, 'id', $elm$json$Json$Decode$string),
+		A2($elm$json$Json$Decode$field, 'lokasi', $elm$json$Json$Decode$string)));
+var $author$project$Main$dapatListKota = $elm$http$Http$get(
+	{
+		af: A2($elm$http$Http$expectJson, $author$project$Main$DapatKota, $author$project$Main$listKotaDecoder),
+		aU: 'https://api.myquran.com/v1/sholat/kota/semua'
+	});
+var $author$project$Main$init = function (_v0) {
+	return _Utils_Tuple2($author$project$Main$Memuat, $author$project$Main$dapatListKota);
+};
+var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Main$BerhasilJadwal = function (a) {
+	return {$: 3, a: a};
+};
+var $author$project$Main$BerhasilKota = function (a) {
+	return {$: 2, a: a};
+};
+var $author$project$Main$Gagal = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$Main$DapatJadwal = function (a) {
+	return {$: 2, a: a};
 };
 var $author$project$Main$Jadwal = F8(
 	function (imsak, subuh, terbit, dhuha, dzuhur, ashar, maghrib, isya) {
-		return {L: ashar, O: dhuha, P: dzuhur, W: imsak, X: isya, Z: maghrib, ap: subuh, ar: terbit};
+		return {X: ashar, ab: dhuha, ac: dzuhur, an: imsak, aq: isya, at: maghrib, aP: subuh, aR: terbit};
 	});
-var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
 		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
 	});
 var $elm$json$Json$Decode$map8 = _Json_map8;
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $author$project$Main$jadwalDecoder = A9(
+var $author$project$Main$listJadwalDecoder = A9(
 	$elm$json$Json$Decode$map8,
 	$author$project$Main$Jadwal,
 	A2(
@@ -6173,53 +6205,282 @@ var $author$project$Main$jadwalDecoder = A9(
 		_List_fromArray(
 			['data', 'jadwal', 'isya']),
 		$elm$json$Json$Decode$string));
-var $author$project$Main$init = function (_v0) {
-	return _Utils_Tuple2(
-		$author$project$Main$Loading,
-		$elm$http$Http$get(
-			{
-				aE: A2($elm$http$Http$expectJson, $author$project$Main$Dapat, $author$project$Main$jadwalDecoder),
-				aX: 'https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30'
-			}));
-};
-var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Main$subscriptions = function (model) {
-	return $elm$core$Platform$Sub$none;
-};
-var $author$project$Main$Failure = {$: 0};
-var $author$project$Main$Succes = function (a) {
-	return {$: 2, a: a};
+var $author$project$Main$dapatListJadwal = function (idkota) {
+	return $elm$http$Http$get(
+		{
+			af: A2($elm$http$Http$expectJson, $author$project$Main$DapatJadwal, $author$project$Main$listJadwalDecoder),
+			aU: 'https://api.myquran.com/v1/sholat/jadwal/' + (idkota + '/2022/06/23')
+		});
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$update = F2(
-	function (msg, model) {
-		if (msg.$ === 1) {
-			var result = msg.a;
-			if (!result.$) {
-				var jadwal = result.a;
+	function (msg, _v0) {
+		switch (msg.$) {
+			case 1:
+				var data = msg.a;
+				if (!data.$) {
+					var hasil = data.a;
+					return _Utils_Tuple2(
+						$author$project$Main$BerhasilKota(hasil),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(
+						$author$project$Main$Gagal('Gagal saat memperoses data kota'),
+						$elm$core$Platform$Cmd$none);
+				}
+			case 2:
+				var data = msg.a;
+				if (!data.$) {
+					var hasil = data.a;
+					return _Utils_Tuple2(
+						$author$project$Main$BerhasilJadwal(hasil),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(
+						$author$project$Main$Gagal('Gagal saat memproses data jadwal'),
+						$elm$core$Platform$Cmd$none);
+				}
+			case 3:
+				var data = msg.a;
 				return _Utils_Tuple2(
-					$author$project$Main$Succes(jadwal),
+					$author$project$Main$Memuat,
+					$author$project$Main$dapatListJadwal(data));
+			default:
+				return _Utils_Tuple2(
+					$author$project$Main$Gagal('Gagal saat mengambil data'),
 					$elm$core$Platform$Cmd$none);
-			} else {
-				return _Utils_Tuple2($author$project$Main$Failure, $elm$core$Platform$Cmd$none);
-			}
-		} else {
-			return _Utils_Tuple2($author$project$Main$Failure, $elm$core$Platform$Cmd$none);
 		}
 	});
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$table = _VirtualDom_node('table');
+var $elm$html$Html$td = _VirtualDom_node('td');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $elm$html$Html$th = _VirtualDom_node('th');
+var $elm$html$Html$tr = _VirtualDom_node('tr');
+var $author$project$Main$membuatJadwal = function (jadwal) {
+	return A2(
+		$elm$html$Html$table,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$th,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Sholat')
+							])),
+						A2(
+						$elm$html$Html$th,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Waktu')
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Imsak')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.an)
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Subuh')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.aP)
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Terbit')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.aR)
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Dhuha')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.ab)
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Dzuur')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.ac)
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Ashar')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.X)
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('maghrib')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.at)
+							]))
+					])),
+				A2(
+				$elm$html$Html$tr,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('isya')
+							])),
+						A2(
+						$elm$html$Html$td,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(jadwal.aq)
+							]))
+					]))
+			]));
+};
+var $author$project$Main$Terpilih = function (a) {
+	return {$: 3, a: a};
+};
+var $elm$html$Html$Events$alwaysStop = function (x) {
+	return _Utils_Tuple2(x, true);
+};
+var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$stopPropagationOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
+	});
+var $elm$html$Html$Events$targetValue = A2(
+	$elm$json$Json$Decode$at,
+	_List_fromArray(
+		['target', 'value']),
+	$elm$json$Json$Decode$string);
+var $elm$html$Html$Events$onInput = function (tagger) {
+	return A2(
+		$elm$html$Html$Events$stopPropagationOn,
+		'input',
+		A2(
+			$elm$json$Json$Decode$map,
+			$elm$html$Html$Events$alwaysStop,
+			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
+};
+var $elm$html$Html$option = _VirtualDom_node('option');
+var $elm$html$Html$select = _VirtualDom_node('select');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6228,258 +6489,74 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
-var $elm$html$Html$Attributes$href = function (url) {
+var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
+var $author$project$Main$membuatPilihan = function (data) {
 	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
+		$elm$html$Html$select,
+		_List_fromArray(
+			[
+				$elm$html$Html$Events$onInput($author$project$Main$Terpilih)
+			]),
+		A2(
+			$elm$core$List$map,
+			function (l) {
+				return A2(
+					$elm$html$Html$option,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$value(l.L)
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text(l.M)
+						]));
+			},
+			data));
 };
-var $elm$html$Html$table = _VirtualDom_node('table');
-var $elm$html$Html$td = _VirtualDom_node('td');
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$html$Html$th = _VirtualDom_node('th');
-var $elm$html$Html$tr = _VirtualDom_node('tr');
+var $author$project$Main$keadaan = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$br, _List_Nil, _List_Nil),
+				function () {
+				switch (model.$) {
+					case 0:
+						var x = model.a;
+						return $elm$html$Html$text(x);
+					case 1:
+						return $elm$html$Html$text('Memuat data mohon tunggu');
+					case 2:
+						var data = model.a;
+						return $author$project$Main$membuatPilihan(data);
+					default:
+						var data = model.a;
+						return $author$project$Main$membuatJadwal(data);
+				}
+			}()
+			]));
+};
 var $author$project$Main$view = function (model) {
-	switch (model.$) {
-		case 0:
-			return $elm$html$Html$text('Gagal mengambil data');
-		case 1:
-			return $elm$html$Html$text('Memuat...');
-		default:
-			var jadwal = model.a;
-			return A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$div,
-						_List_Nil,
-						_List_fromArray(
-							[
-								$elm$html$Html$text('data didapatkan dari api.myquran.com'),
-								A2($elm$html$Html$br, _List_Nil, _List_Nil),
-								A2(
-								$elm$html$Html$a,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$href('https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30')
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('https://api.myquran.com/v1/sholat/jadwal/1301/2022/11/30')
-									])),
-								A2($elm$html$Html$br, _List_Nil, _List_Nil),
-								$elm$html$Html$text('Selasa, 30 November 2022'),
-								A2($elm$html$Html$br, _List_Nil, _List_Nil)
-							])),
-						A2(
-						$elm$html$Html$table,
-						_List_Nil,
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_fromArray(
-											[
-												A2($elm$html$Html$Attributes$attribute, 'colspan', '2')
-											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('untuk DKI Jakarta')
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$th,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Sholat')
-											])),
-										A2(
-										$elm$html$Html$th,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Waktu')
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Imsak')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.W)
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Subuh')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.ap)
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Terbit')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.ar)
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Dhuha')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.O)
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Dzuur')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.P)
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Ashar')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.L)
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('maghrib')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.Z)
-											]))
-									])),
-								A2(
-								$elm$html$Html$tr,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('isya')
-											])),
-										A2(
-										$elm$html$Html$td,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text(jadwal.X)
-											]))
-									]))
-							]))
-					]));
-	}
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$elm$html$Html$text('WARNING : semua data yang ada di halaman ini belum benar'),
+				A2($elm$html$Html$br, _List_Nil, _List_Nil),
+				$elm$html$Html$text('dan web ini masih dalam tahap pengembangan'),
+				$author$project$Main$keadaan(model)
+			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{aI: $author$project$Main$init, aT: $author$project$Main$subscriptions, aW: $author$project$Main$update, aY: $author$project$Main$view});
+	{
+		ba: $author$project$Main$init,
+		bm: function (_v0) {
+			return $elm$core$Platform$Sub$none;
+		},
+		bp: $author$project$Main$update,
+		bq: $author$project$Main$view
+	});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));
