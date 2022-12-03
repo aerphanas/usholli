@@ -3,7 +3,7 @@ module Main exposing (..)
 import Browser
 import Http
 import List exposing (..)
-import Date
+import Time
 import Json.Decode exposing ( Decoder
                             , map8
                             , map2
@@ -34,7 +34,7 @@ main : Program () Model Msg
 main = 
   Browser.element { init = init
                   , update = update
-                  , subscriptions = \_ -> Sub.none
+                  , subscriptions = subscriptions
                   , view = view
                   }
 
@@ -45,6 +45,7 @@ type Model
   | Memuat
   | BerhasilKota (List DaftarKota)
   | BerhasilJadwal Jadwal
+  | Waktu SetWaktu
 
 type alias DaftarKota =
     { id : String
@@ -62,6 +63,11 @@ type alias Jadwal =
     , isya : String
     }
 
+type alias SetWaktu =
+  { zone : Time.Zone
+  , time : Time.Posix
+  }
+
 init : () -> (Model, Cmd Msg)
 init _ =
   ( Memuat
@@ -75,9 +81,11 @@ type Msg
   | DapatKota ( Result Http.Error (List DaftarKota) )
   | DapatJadwal ( Result Http.Error Jadwal )
   | Terpilih String
+  | Tick Time.Posix
+  | AdjustTimeZone Time.Zone
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg _ =
+update msg model =
     case msg of
         DapatKota data ->
           case data of
@@ -93,11 +101,27 @@ update msg _ =
             Err _ ->
               (Gagal "Gagal saat memproses data jadwal", Cmd.none)
 
+        Tick newTime ->
+          ( { model | time = newTime }
+          , Cmd.none
+          )
+
+        AdjustTimeZone newZone ->
+          ( { model | zone = newZone }
+          , Cmd.none
+          )
+
         Terpilih data ->
           (Memuat , dapatListJadwal data)
 
         Terlepas ->
           (Gagal "Gagal saat mengambil data", Cmd.none)
+
+-- SUB
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  Time.every 1000 Tick
 
 -- VIEW
 

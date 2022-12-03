@@ -9,7 +9,5 @@ Work In Progress
 
 - [x] communicate with API  
 - [ ] automatic date
-- [ ] minimalist disign
+- [x] minimalist disign
 - [ ] good readme
-- [ ] notification
-- [ ] usable
