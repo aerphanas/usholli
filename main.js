@@ -6209,13 +6209,13 @@ var $author$project$Main$dapatListJadwal = function (idkota) {
 	return $elm$http$Http$get(
 		{
 			af: A2($elm$http$Http$expectJson, $author$project$Main$DapatJadwal, $author$project$Main$listJadwalDecoder),
-			aU: 'https://api.myquran.com/v1/sholat/jadwal/' + (idkota + '/2022/06/23')
+			aU: 'https://api.myquran.com/v1/sholat/jadwal/' + (idkota + '/2022/12/03')
 		});
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$update = F2(
-	function (msg, _v0) {
+	function (msg, model) {
 		switch (msg.$) {
 			case 1:
 				var data = msg.a;
@@ -6252,8 +6252,23 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $elm$html$Html$table = _VirtualDom_node('table');
 var $elm$html$Html$td = _VirtualDom_node('td');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
@@ -6481,14 +6496,6 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 };
 var $elm$html$Html$option = _VirtualDom_node('option');
 var $elm$html$Html$select = _VirtualDom_node('select');
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Main$membuatPilihan = function (data) {
 	return A2(
@@ -6543,9 +6550,23 @@ var $author$project$Main$view = function (model) {
 		_List_Nil,
 		_List_fromArray(
 			[
+				$elm$html$Html$text('web ini masih dalam tahap pengembangan'),
+				A2($elm$html$Html$br, _List_Nil, _List_Nil),
+				$elm$html$Html$text('bila ingin berkontribusi silakan pergi ke : '),
+				A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href('https://github.com/aerphanas/usholli')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Github')
+					])),
+				A2($elm$html$Html$br, _List_Nil, _List_Nil),
 				$elm$html$Html$text('WARNING : semua data yang ada di halaman ini belum benar'),
 				A2($elm$html$Html$br, _List_Nil, _List_Nil),
-				$elm$html$Html$text('dan web ini masih dalam tahap pengembangan'),
+				$elm$html$Html$text('WARNING : Data untuk 2022/11/03 atau tahun 2022 bulan 11 tanggal 03'),
 				$author$project$Main$keadaan(model)
 			]));
 };

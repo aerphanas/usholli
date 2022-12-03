@@ -2,8 +2,6 @@ module Main exposing (..)
 
 import Browser
 import Http
-import List exposing (..)
-import Time
 import Json.Decode exposing ( Decoder
                             , map8
                             , map2
@@ -15,7 +13,6 @@ import Json.Decode exposing ( Decoder
 import Html exposing  ( Html
                       , text
                       , div
-                      , button
                       , br
                       , select
                       , option
@@ -23,10 +20,10 @@ import Html exposing  ( Html
                       , tr
                       , td
                       , th
+                      , a
                       )
 import Html.Events exposing ( onInput)
-import String exposing (isEmpty)
-import Html.Attributes exposing (value, attribute)
+import Html.Attributes exposing (value, href)
 
 -- MAIN
 
@@ -34,7 +31,7 @@ main : Program () Model Msg
 main = 
   Browser.element { init = init
                   , update = update
-                  , subscriptions = subscriptions
+                  , subscriptions = \_->Sub.none
                   , view = view
                   }
 
@@ -45,7 +42,6 @@ type Model
   | Memuat
   | BerhasilKota (List DaftarKota)
   | BerhasilJadwal Jadwal
-  | Waktu SetWaktu
 
 type alias DaftarKota =
     { id : String
@@ -63,10 +59,6 @@ type alias Jadwal =
     , isya : String
     }
 
-type alias SetWaktu =
-  { zone : Time.Zone
-  , time : Time.Posix
-  }
 
 init : () -> (Model, Cmd Msg)
 init _ =
@@ -81,8 +73,6 @@ type Msg
   | DapatKota ( Result Http.Error (List DaftarKota) )
   | DapatJadwal ( Result Http.Error Jadwal )
   | Terpilih String
-  | Tick Time.Posix
-  | AdjustTimeZone Time.Zone
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -101,36 +91,25 @@ update msg model =
             Err _ ->
               (Gagal "Gagal saat memproses data jadwal", Cmd.none)
 
-        Tick newTime ->
-          ( { model | time = newTime }
-          , Cmd.none
-          )
-
-        AdjustTimeZone newZone ->
-          ( { model | zone = newZone }
-          , Cmd.none
-          )
-
         Terpilih data ->
           (Memuat , dapatListJadwal data)
 
         Terlepas ->
           (Gagal "Gagal saat mengambil data", Cmd.none)
 
--- SUB
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-  Time.every 1000 Tick
-
 -- VIEW
 
 view : Model -> Html Msg
 view model =
     div []
-      [ text "WARNING : semua data yang ada di halaman ini belum benar"
+      [ text "web ini masih dalam tahap pengembangan"
       , br [] []
-      , text "dan web ini masih dalam tahap pengembangan"
+      , text "bila ingin berkontribusi silakan pergi ke : "
+      , a [href "https://github.com/aerphanas/usholli"] [text "Github"]
+      , br [] []
+      , text "WARNING : semua data yang ada di halaman ini belum benar"
+      , br [] []
+      , text "WARNING : Data untuk 2022/11/03 atau tahun 2022 bulan 11 tanggal 03"
       , keadaan model
       ]
 
@@ -198,14 +177,14 @@ dapatListJadwal idkota =
         Http.get
           { url = "https://api.myquran.com/v1/sholat/jadwal/"
                   ++ idkota
-                  ++ "/2022/06/23"
+                  ++ "/2022/12/03"
           , expect = Http.expectJson DapatJadwal listJadwalDecoder
           }
 
 listKotaDecoder : Decoder (List DaftarKota)
 listKotaDecoder =
     list
-        (Json.Decode.map2 (\id lokasi -> { id = id, lokasi = lokasi })
+        (map2 (\id lokasi -> { id = id, lokasi = lokasi })
             (field "id" string)
             (field "lokasi" string)
         )
