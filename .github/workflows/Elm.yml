@@ -31,7 +31,7 @@ jobs:
         run: |
           mkdir ./public
           mv ./index.html ./public/
-          mv ./medea/main.css ./public/main.css
+          mv ./media/main.css ./public/main.css
           mv ./main.js ./public/main.js
 
       - name: Deploy
